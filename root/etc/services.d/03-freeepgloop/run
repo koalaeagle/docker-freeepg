@@ -1,0 +1,24 @@
+#!/usr/bin/with-contenv sh
+
+FREEEPG_ENABLED=${FREEEPG_ENABLED:-1}
+FREEEPG_DELAY=${FREEEPG_DELAY:-10800}
+FREEEPG_REGION=${FREEEPG_REGION:-region_vic_melbourne}
+
+if [ "${FREEEPG_ENABLED}" -eq 0 ]; then
+	echo "freeepgloop is disabled - exiting"
+	s6-svc -d /var/run/s6/services/03-freeepgloop
+	exit 0
+fi
+
+cd /cache
+
+while true
+do
+	echo "Starting freeepg loop with region set to ${FREEEPG_REGION}"
+	s6-setuidgid abc perl /xml_tv/free_epg.pl --region ${FREEEPG_REGION} --output=/srv/http/epg_out.xmltv "${FREEEPG_EXTRA}"
+	if [ -f /srv/http/epg_out.xmltv ]; then
+		sleep "$FREEEPG_DELAY"
+	else
+		sleep 600
+	fi
+done

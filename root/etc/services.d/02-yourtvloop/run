@@ -1,0 +1,28 @@
+#!/usr/bin/with-contenv sh
+
+YOURTV_ENABLED=${YOURTV_ENABLED:-1}
+YOURTV_DELAY=${YOURTV_DELAY:-10800}
+YOURTV_REGION=${YOURTV_REGION:-94}
+
+if [ "${YOURTV_ENABLED}" -eq 0 ]; then
+	echo "yourtvloop is disabled - exiting"
+	s6-svc -d /var/run/s6/services/02-yourtvloop
+	exit 0
+fi
+
+if [ "${FREEEPG_ENABLED}" -eq 1 ]; then
+	sleep 600
+fi
+
+cd /cache
+
+while true
+do
+	echo "Starting yourtv loop with region set to ${YOURTV_REGION}"
+	s6-setuidgid abc perl /xml_tv/yourtv.pl --region=${YOURTV_REGION} --output=/srv/http/yourtv_out.xmltv "${YOURTV_EXTRA}"
+	if [ -f /srv/http/yourtv_out.xmltv ]; then
+		sleep "$YOURTV_DELAY"
+	else
+		sleep 600
+	fi
+done

@@ -1,0 +1,15 @@
+#!/usr/bin/with-contenv sh
+
+USER=abc
+PUID=${PUID:-1000}
+PGID=${PGID:-1000}
+
+addgroup --gid "$PGID" "$USER" \
+    && adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "$(pwd)" \
+    --ingroup "$USER" \
+    --no-create-home \
+    --uid "$PUID" \
+    "$USER"

@@ -1,0 +1,13 @@
+#!/usr/bin/with-contenv sh
+
+DARKHTTPD_ENABLED=${DARKHTTPD_ENABLED:-1}
+
+if [ "${DARKHTTPD_ENABLED}" -eq 0 ]; then
+	echo "darkhttpd is disabled - exiting"
+	s6-svc -d /var/run/s6/services/01-darkhttpd
+	exit 2
+fi
+
+echo "Starting darkhttpd"
+
+/usr/bin/darkhttpd /srv/http --uid abc --gid abc --chroot --port 80

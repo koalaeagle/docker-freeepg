@@ -1,0 +1,16 @@
+#!/usr/bin/with-contenv sh
+
+DARKHTTPD_DIR=/srv/http
+CACHE_DIR=/cache
+
+if [ ! -d "${DARKHTTPD_DIR}" ]; then
+	mkdir -p "${DARKHTTPD_DIR}"
+fi
+
+chown -R abc:abc "${DARKHTTPD_DIR}"
+
+if [ ! -d "${CACHE_DIR}" ]; then
+	mkdir -p "${CACHE_DIR}"
+fi
+
+chown -R abc:abc "${CACHE_DIR}"
