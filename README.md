@@ -70,12 +70,12 @@ web example: http://192.168.1.10:8888/epg_out.xmltv
 
 ## Outputs
 
-yourtv: /srv/http/yourtv_out.xmltv
+yourtv: /srv/http/yourtv_out.xmltv \
 mapped: if "-v /var/lib/freeepg/data:/srv/http", then /var/lib/freeepg/data/yourtv_out.xmltv
 
 ## Regions
-For an updated list with the container running:
-sudo docker exec -it freeepg /xml_tv/yourtv.pl --help
+For an updated list with the container running: \
+sudo docker exec -it freeepg /xml_tv/yourtv.pl --help \
 sudo docker exec -it freeepg /xml_tv/free_epg.pl --help
 
 
