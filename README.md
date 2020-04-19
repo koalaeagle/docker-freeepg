@@ -34,16 +34,16 @@ sudo docker run -d --name freeepg \
 ### /cache
 This is the cache directory used by the scripts. Mapping this is not required, although, if not mapped the scripts will have to start from scratch if the container deleted and re-created which could take 1-2 hours.
 ### /srv/http
-This is where the scripts will output the xmltv files. This volume can then be mapped to a plex/emby docker container, or used by a native container. Alternatively, these can be used via http by using soemthing like http://<docker host IP>:<port>/yourtv_out.xmltv
+This is where the scripts will output the xmltv files. This volume can then be mapped to a plex/emby docker container, or used by a native container. Alternatively, these can be used via http by using soemthing like http://(docker host IP):(port)/yourtv_out.xmltv
 #### yourtv
-/srv/http/yourtv_out.xmltv
-mapped: if "-v /var/lib/freeepg/data:/srv/http", then /var/lib/freeepg/data/yourtv_out.xmltv
-web: http://(docker host IP):(port)/yourtv_out.xmltv
+/srv/http/yourtv_out.xmltv \
+mapped: if "-v /var/lib/freeepg/data:/srv/http", then /var/lib/freeepg/data/yourtv_out.xmltv \
+web: http://(docker host IP):(port)/yourtv_out.xmltv \
 web example: http://192.168.1.10:8888/yourtv_out.xmltv
 #### freeepg
-/srv/http/epg_out.xmltv
-mapped: if "-v /var/lib/freeepg/data:/srv/http", then /var/lib/freeepg/data/epg_out.xmltv
-web: http://(docker host IP):(port)/epg_out.xmltv
+/srv/http/epg_out.xmltv \
+mapped: if "-v /var/lib/freeepg/data:/srv/http", then /var/lib/freeepg/data/epg_out.xmltv \
+web: http://(docker host IP):(port)/epg_out.xmltv \
 web example: http://192.168.1.10:8888/epg_out.xmltv
 
 
